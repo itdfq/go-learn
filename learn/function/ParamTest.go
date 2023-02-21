@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+var a int = 123
+
 func main() {
 	/* 定义局部变量 */
 	var a int = 100
