@@ -27,4 +27,9 @@ func main() {
 		fmt.Println(i, s)
 	}
 
+	kvs := map[string]int{"a": 1, "b": 2}
+	for k, v := range kvs {
+		fmt.Printf("k=%s v=%d\n", k, v)
+	}
+
 }
