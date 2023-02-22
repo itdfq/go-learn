@@ -16,5 +16,4 @@ func config(conf string) error {
 	} else {
 		return nil
 	}
-
 }
