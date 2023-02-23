@@ -55,6 +55,29 @@ func main() {
 	//e.Start(":11323") 监听11323端口
 	e.Logger.Fatal(e.Start(":11323"))
 
+	//设置错误处理程序
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			return echo.NewHTTPError(http.StatusBadRequest)
+		}
+	})
+
+}
+
+func customHTTPErrorHandler(err error, c echo.Context) {
+	code := http.StatusInternalServerError
+
+	//应该是 看看当前这个echo的对象有没有值，通过指针判断，当前是否发生异常，将指针的值
+	he, ok := err.(*echo.HTTPError)
+
+	fmt.Println(code, he, ok)
+	//if he, ok := err.(*echo.HTTPError); ok {
+	//	code = he.Code
+	//}
+	//if he, ok := ; ok {
+	//	code = he.Code
+	//}
+
 }
 func getUser(c echo.Context) error {
 	id := c.Param("id")
