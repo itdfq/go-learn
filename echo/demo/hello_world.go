@@ -81,7 +81,8 @@ func Person(c echo.Context) error {
 		fmt.Println("json.Unmarshal err:", err)
 		return err
 	}
-
+	headerName := c.Request().Header.Get("name")
+	fmt.Println("请求头，name=", headerName)
 	fmt.Println("user:", user) // user:[{1 xiaoming 13} {2 xiaohong 19}]
 	//re, err := json.Marshal(user)
 	//if err != nil {
