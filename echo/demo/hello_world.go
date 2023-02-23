@@ -10,6 +10,7 @@ import (
 	"net/http"
 	_ "net/http"
 	"os"
+	"time"
 )
 
 type (
@@ -139,5 +140,33 @@ func getFile(c echo.Context) error {
 		return err
 	}
 	return c.HTML(http.StatusOK, "<b>Thank you! "+name+"</b>")
+
+}
+
+/**
+写入Cookie
+*/
+func writeCookie(c echo.Context) error {
+	cookie := new(http.Cookie)
+	cookie.Name = "userName"
+	cookie.Value = "小明"
+
+	//设置cookie过期时间
+	cookie.Expires = time.Now().Add(24 * time.Hour)
+	c.SetCookie(cookie)
+	return c.JSON(http.StatusOK, "写入cookie成功")
+}
+
+/**
+读取Cookie
+*/
+func readCookie(c echo.Context) error {
+	cookie, err := c.Cookie("username")
+	if err != nil {
+		return nil
+	}
+	fmt.Println(cookie.Name)
+	fmt.Println(cookie.Value)
+	return c.String(http.StatusOK, "read a cookie")
 
 }
