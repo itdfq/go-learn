@@ -13,7 +13,7 @@ type Books struct {
 
 func main() {
 	//创建一个新的结构体
-	fmt.Println(Books{"Go", "duan", "learn", 1})
+	fmt.Println(Books{"Go", "duan", "go", 1})
 	// 也可以使用 key => value 格式
 	fmt.Println(Books{title: "Go 语言", author: "www.runoob.com", subject: "Go 语言教程", book_id: 6495407})
 

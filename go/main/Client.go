@@ -1,11 +1,11 @@
 package main
 
 import (
-	"test/learn/main/pageTest"
+	"test/go/main/pageTest"
 )
 
 func main() {
-	s := "test"
+	s := "go-go"
 	pageTest.Read(s)
 
 }
