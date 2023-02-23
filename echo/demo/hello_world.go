@@ -57,6 +57,12 @@ func main() {
 }
 func getUser(c echo.Context) error {
 	id := c.Param("id")
+	var user User
+	//使用 Bind也可以直接获取form表单中的实体类型
+	if err := c.Bind(&user); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
+	}
+	fmt.Println("bind参数：", user)
 	fmt.Println("接收到的参数：", id)
 	return c.String(http.StatusOK, "接受到的参数为："+id)
 }
