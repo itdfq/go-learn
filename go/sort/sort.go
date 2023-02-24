@@ -59,6 +59,7 @@ func main() {
 	index := sort.SearchStrings(names, "alan")
 	fmt.Printf("alan的位置在：%d,值为：%s\n", index, names[index])
 	//sort.SearchStrings(,"")
+
 }
 func printSlice(x []string) {
 	fmt.Printf("len=%d cap=%d slice=%v\n", len(x), cap(x), x)
