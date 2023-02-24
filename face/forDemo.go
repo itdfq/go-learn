@@ -1,4 +1,4 @@
-package face
+package main
 
 import "fmt"
 
