@@ -27,7 +27,7 @@ func main() {
 	data, err := ReadFrom(file, size)
 
 	// 从字符串读取
-	//data, err = ReadFrom(strings.NewReader("from string"), 12)
+	//data, err = ReadFrom(strings.NewReader("from text"), 12)
 	fmt.Println(string(data), err)
 
 	reader := bytes.NewReader([]byte("Go语言中文网"))
