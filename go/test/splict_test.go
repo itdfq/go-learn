@@ -13,3 +13,11 @@ func TestSplit(t *testing.T) { //测试函数必须以 Test[a-Z]开头，必须�
 		t.Errorf("excepted:%v, got:%v", want, got) // 测试失败输出错误提示
 	}
 }
+
+func TestMoreSplit(t *testing.T) {
+	got := Splict("abcd", "bc")
+	want := []string{"a", "d"}
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf("excepted:%v, got:%v", want, got)
+	}
+}
