@@ -18,3 +18,12 @@ func (cat Cat) say() {
 func (dog Dog) say() {
 	fmt.Println("狗-> 汪汪汪")
 }
+func main() {
+	var x Sayer
+	a := Cat{}
+	b := Dog{}
+	x = a
+	x.say()
+	x = b
+	x.say()
+}
