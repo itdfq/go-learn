@@ -7,7 +7,7 @@ type User struct {
 	name string
 }
 type Manager struct {
-	User
+	User    //go支持只提供类型而不写字段名的方式，也就是匿名字段，也称为嵌入字段
 	address string
 	title   string
 }
