@@ -1,6 +1,9 @@
 package test
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func Test_Division_1(t *testing.T) {
 	if i, e := Division(6, 2); i != 3 || e != nil { //try a unit test on function
@@ -45,4 +48,9 @@ func Benchmark_TimeConsumingFunction(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Division(4, 5)
 	}
+}
+
+func Test_Division_3(t *testing.T) {
+	a := 3000000 * 0.0001
+	fmt.Printf("%v", a)
 }
