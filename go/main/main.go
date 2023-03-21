@@ -1,7 +1,7 @@
 package main
 
 import (
-	"test/go/main/pageTest"
+	"go-learn/go/main/pageTest"
 )
 
 func main() {
