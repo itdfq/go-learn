@@ -133,6 +133,74 @@ func (r *RabbitMQ) RecieveSub(name string) {
 	<-forever
 }
 
+//路由模式
+//创建RabbitMQ实例
+func NewRabbitMQRouting(exchangeName string, routingKey string) *RabbitMQ {
+	//创建RabbitMQ实例
+	rabbitmq := NewRabbitMQ("", exchangeName, routingKey)
+	var err error
+	//获取connection
+	rabbitmq.conn, err = amqp.Dial(rabbitmq.Mqurl)
+	rabbitmq.failOnErr(err, "failed to connect rabbitmq!")
+	//获取channel
+	rabbitmq.channel, err = rabbitmq.conn.Channel()
+	rabbitmq.failOnErr(err, "failed to open a channel")
+	return rabbitmq
+}
+
+//路由模式发送消息
+func (r *RabbitMQ) PublishRouting(message string) {
+	//1.尝试创建交换机
+	err := r.channel.ExchangeDeclare(
+		r.Exchange,
+		//要改成direct
+		"direct",
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+
+	r.failOnErr(err, "Failed to declare an excha"+
+		"nge")
+
+	//2.发送消息
+	err = r.channel.Publish(
+		r.Exchange,
+		//要设置
+		r.Key,
+		false,
+		false,
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        []byte(message),
+		})
+}
+
+//路由模式接受消息
+func (r *RabbitMQ) RecieveRouting() {
+	err := r.channel.ExchangeDeclare(r.Exchange, "direct", true, false, false, false, nil)
+	r.failOnErr(err, "Failed to declare an exchange")
+	//创建队列
+	q, err := r.channel.QueueDeclare("", false, false, true, false, nil)
+	r.failOnErr(err, "Faile to declare a queue")
+	//绑定
+	err = r.channel.QueueBind(q.Name, r.Key, r.Exchange, false, nil)
+	r.failOnErr(err, "bind error")
+	//消费
+	messages, err := r.channel.Consume(
+		q.Name, "", true, false, false, false, nil)
+	forever := make(chan bool)
+	go func() {
+		for d := range messages {
+			log.Printf("Reveived a message :%s\n", d.Body)
+		}
+	}()
+	fmt.Println("退出请按CTRL +C ")
+	<-forever
+}
+
 //简单模式声明rabbitMQ
 func NewRabbitMqSimple(queueName string) *RabbitMQ {
 	//创建rabbitMq 实例
