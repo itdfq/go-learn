@@ -142,7 +142,7 @@ func (r *RabbitMQ) PublishSimple(message string) {
 }
 
 //简单模式消费
-func (r *RabbitMQ) ConsumeSimple() {
+func (r *RabbitMQ) ConsumeSimple(name string) {
 	//申请队列
 	q, err := r.channel.QueueDeclare(r.QueueName, false, false, false, false, nil)
 	r.failOnErr(err, "消费申请队列失败")
@@ -158,7 +158,7 @@ func (r *RabbitMQ) ConsumeSimple() {
 	//启动协程处理消息
 	go func() {
 		for d := range msgs {
-			log.Printf("simple received a message :%s", d.Body)
+			log.Printf("消费者:%s simple received a message :%s", name, d.Body)
 		}
 	}()
 	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")

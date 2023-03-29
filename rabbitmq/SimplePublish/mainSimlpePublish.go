@@ -7,6 +7,9 @@ import (
 
 func main() {
 	rabbitmq := RabbitMQ.NewRabbitMqSimple("dfq")
-	rabbitmq.PublishSimple("测试第二次发送代码")
+	for i := 0; i < 5; i++ {
+		rabbitmq.PublishSimple("测试第二次发送代码")
+	}
 	fmt.Println("发送成功!!!")
+
 }
