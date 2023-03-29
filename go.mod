@@ -19,6 +19,7 @@ require (
 	github.com/onsi/gomega v1.27.5 // indirect
 	github.com/rs/zerolog v1.29.0
 	github.com/samuel/go-zookeeper v0.0.0-20201211165307-7117e9ea2414
+	github.com/streadway/amqp v1.0.0
 	github.com/ugorji/go/codec v1.2.10 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/arch v0.2.0 // indirect
