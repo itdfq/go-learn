@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"regexp"
+)
 
 func main() {
 	var stockcode = 123
@@ -22,6 +25,14 @@ func main() {
 			fmt.Printf("%d  是素数\n", i)
 		}
 
+	}
+
+	fmt.Println("=========================")
+	s := "130821199103278829"
+	re := regexp.MustCompile("[123456789]\\d{5}((19\\d{2})|(20[01]\\d))((0[1-9])|(1[012]))((0[1-9])|([12]\\d)|(3[01]))\\d{3}[\\dXx]")
+	result := re.FindAllStringSubmatch(s, -1)
+	for _, v := range result {
+		fmt.Println(v)
 	}
 
 }
