@@ -75,41 +75,61 @@ func (r *RabbitMQ) PublishPub(message string) {
 
 }
 
-//订阅模式消费代码
-func (r *RabbitMQ) RecieveSub() {
-	//创建交换机
-	err := r.channel.ExchangeDeclare(r.Exchange, "fanout", true, false, false, false, nil)
-	r.failOnErr(err, "consume failed to declare an exchange")
-	//试探性创建队列
+//订阅模式消费端代码
+func (r *RabbitMQ) RecieveSub(name string) {
+	//1.试探性创建交换机
+	err := r.channel.ExchangeDeclare(
+		r.Exchange,
+		//交换机类型
+		"fanout",
+		true,
+		false,
+		//YES表示这个exchange不可以被client用来推送消息，仅用来进行exchange和exchange之间的绑定
+		false,
+		false,
+		nil,
+	)
+	r.failOnErr(err, "Failed to declare an exch"+
+		"ange")
+	//2.试探性创建队列，这里注意队列名称不要写
 	q, err := r.channel.QueueDeclare(
-		"",    //随机生产队列名称
-		false, //是否持久化
-		false, //是否自动删除
-		true,  //排他性
-		false, //是否阻塞处理
+		"", //随机生产队列名称
+		false,
+		false,
+		true,
+		false,
 		nil,
 	)
 	r.failOnErr(err, "Failed to declare a queue")
 
-	//绑定队列到exchange中
+	//绑定队列到 exchange 中
 	err = r.channel.QueueBind(
 		q.Name,
-		"", //在pub/sub模式下，key为空
+		//在pub/sub模式下，这里的key要为空
+		"",
 		r.Exchange,
+		false,
+		nil)
+
+	//消费消息
+	messges, err := r.channel.Consume(
+		q.Name,
+		"",
+		true,
+		false,
+		false,
 		false,
 		nil,
 	)
-	r.failOnErr(err, "queue bind to exchange fail")
 
-	//消费消息
-	messages, err := r.channel.Consume(q.Name, "", true, false, false, false, nil)
 	forever := make(chan bool)
+
 	go func() {
-		for d := range messages {
-			log.Fatalf("Received a message：%s", d.Body)
+		for d := range messges {
+			log.Printf("name:%s Received a message: %s", name, d.Body)
 		}
 	}()
-	fmt.Println("退出请按 CTRL+C \n")
+	fmt.Println("退出请按 CTRL+C\n")
 	<-forever
 }
 
