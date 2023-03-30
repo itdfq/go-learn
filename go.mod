@@ -14,7 +14,6 @@ require (
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.4.0 // indirect
-	github.com/mattn/go-sqlite3 v1.14.15 // indirect
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.27.5 // indirect
 	github.com/rs/zerolog v1.29.0
@@ -23,7 +22,9 @@ require (
 	github.com/ugorji/go/codec v1.2.10 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/arch v0.2.0 // indirect
-	golang.org/x/crypto v0.6.0 // indirect
 	gorm.io/driver/mysql v1.4.7
-	gorm.io/gorm v1.24.6
+	gorm.io/driver/postgres v1.5.0
+	gorm.io/driver/sqlite v1.4.4
+	gorm.io/driver/sqlserver v1.4.2
+	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11
 )
