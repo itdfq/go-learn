@@ -7,8 +7,8 @@ import (
 )
 
 type User struct {
-	Name         string  //允许读和创建
-	Email        *string //允许读和更新
+	Name         string
+	Email        *string
 	Age          uint8
 	Birthday     *time.Time
 	MemberNumber sql.NullString

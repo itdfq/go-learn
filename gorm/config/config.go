@@ -28,6 +28,7 @@ func ConfigMysql() *gorm.DB {
 	if err != nil {
 		panic("连接数据库失败, error=" + err.Error())
 	}
+	fmt.Println("获取数据库连接成功")
 	return db
 }
 
