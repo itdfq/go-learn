@@ -2,6 +2,7 @@ package entry
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"gorm.io/gorm"
 	"log"
@@ -48,8 +49,15 @@ func (u *User) AfterCreate(tx *gorm.DB) (err error) {
 type JsonTime time.Time
 
 // 实现它的json序列化方法
-
 func (this JsonTime) MarshalJSON() ([]byte, error) {
 	var stamp = fmt.Sprintf("\"%s\"", time.Time(this).Format("2006-01-02 15:04:05"))
 	return []byte(stamp), nil
+}
+
+// 更新的钩子函数 : GORM 支持 BeforeSave、BeforeUpdate、AfterSave、AfterUpdate 钩
+func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
+	if u.Name == "admin" {
+		return errors.New("admin user not allowed to update")
+	}
+	return
 }
