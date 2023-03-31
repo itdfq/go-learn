@@ -10,15 +10,15 @@ import (
 )
 
 type User struct {
-	Id           uint `gorm:"primarykey"`
-	Name         string
-	Email        *string
+	Id           uint    `gorm:"primarykey"`
+	Name         string  `gorm:"type:varchar(255)"`
+	Email        *string `gorm:"type:varchar(255)"`
 	Age          uint8
 	Birthday     JsonTime
 	MemberNumber sql.NullString
 	CreatedAt    JsonTime
 	UpdatedAt    JsonTime
-	DeletedAt    JsonTime `gorm:"index"`
+	DeletedAt    gorm.DeletedAt `gorm:"index"`
 }
 
 // 指定表名

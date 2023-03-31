@@ -18,8 +18,8 @@ func main() {
 	println("创建数据库结果：", result)
 
 	//批量添加
-	var users = []entry.User{{Name: "jinzhu1"}, {Name: "jinzhu2"}, {Name: "jinzhu3"}}
-	db.Create(users)
+	//var users = []entry.User{{Name: "jinzhu1"}, {Name: "jinzhu2"}, {Name: "jinzhu3"}}
+	//db.Create(users)
 
 	//或者使用 这个创建100条数据
 	//db.CreateInBatches(users,100)
