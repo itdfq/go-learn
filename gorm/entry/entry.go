@@ -61,3 +61,11 @@ func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 	}
 	return
 }
+
+// 删除的钩子函数
+func (u *User) BeforeDelete(tx *gorm.DB) (err error) {
+	if u.Name == "admin" {
+		return errors.New("admin user not allowed to delete")
+	}
+	return
+}
