@@ -33,11 +33,36 @@ type FileOptDownloadController struct {
 	beego.Controller
 }
 
+//正则
+type ZhengzeController struct {
+	beego.Controller
+}
+
 type Result struct {
 	Code  int         `json:"code"`
 	Msg   string      `json:"msg"`
 	Data  interface{} `json:"data"`
 	Count int         `json:"count"`
+}
+
+//注解Controller
+type CMSController struct {
+	beego.Controller
+}
+
+func (c *CMSController) URLMapping() {
+	c.Mapping("StaticBlock", c.StaticBlock)
+	c.Mapping("AllBlock", c.AllBlock)
+}
+
+// @router /staticblock/:key [get]
+func (c *CMSController) StaticBlock() {
+	c.Ctx.WriteString("staticblock")
+}
+
+// @router /all/:key [get]
+func (c *CMSController) AllBlock() {
+	c.Ctx.WriteString("AllBlock")
 }
 
 func (c *MainController) Get() {
@@ -115,5 +140,35 @@ func (this *FileOptDownloadController) Get() {
 
 	//直接下载
 	this.Ctx.Output.Download("static/0.jpg", "图片1.jpg")
+
+}
+func (this *ZhengzeController) Get() {
+	id := this.Ctx.Input.Param(":id")
+	println("请求的id:", id)
+	mystruct := &Result{200, "", "请求的id" + id, 0}
+	this.Data["json"] = mystruct
+	this.ServeJSON()
+
+}
+
+func (this *ZhengzeController) ListFood() {
+	mystruct := &Result{200, "", "ListFood", 0}
+	this.Data["json"] = mystruct
+	this.ServeJSON()
+
+}
+
+func (this *ZhengzeController) GetFood() {
+	///zhengze/getfood/2013/09/12
+	params := this.Ctx.Input.Params()
+	//"data": {
+	//	"0": "2013",
+	//		"1": "09",
+	//		"2": "12",
+	//		":splat": "2013/09/12"
+	//}
+	mystruct := &Result{200, "", params, 0}
+	this.Data["json"] = mystruct
+	this.ServeJSON()
 
 }
