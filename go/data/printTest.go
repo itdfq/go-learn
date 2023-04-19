@@ -33,5 +33,5 @@ func main() {
 	fmt.Printf("%X\n", "asdzxc") //每个字节用两字节十六进制表示，A-F表示
 	fmt.Printf("%p\n", 0x123)    //0x开头的十六进制数表示
 
-	fmt.Printf("%%")
+	fmt.Printf("%%") //打印%号
 }
