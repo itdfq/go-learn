@@ -86,9 +86,15 @@ func (c *UserController) Get() {
 }
 
 func (this *UserController) Post() {
+
 	//直接输出字符串
 	this.Ctx.WriteString("hello world!!!")
 	//
+}
+
+//设置Controller 不需要屏蔽，Prepare（）方法在 Method 方法之前执行
+func (this *UserController) Prepare() {
+	this.EnableXSRF = false
 }
 
 // json格式输出
