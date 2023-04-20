@@ -4,8 +4,11 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"goweb/controllers"
 	_ "goweb/routers"
+	"html/template"
 	"log"
+	"net/http"
 )
 
 func main() {
@@ -38,4 +41,16 @@ func init() {
 	runmode := beego.AppConfig.String("runmode")
 	log.Println("系统启动成功,当前环境为：{" + runmode + "}")
 
+	//自定义错误处理
+	beego.ErrorHandler("404", page_not_found)
+
+	//定义错误处理的controller
+	beego.ErrorController(&controllers.FuncController{})
+
+}
+func page_not_found(rw http.ResponseWriter, r *http.Request) {
+	t, _ := template.New("404.html").ParseFiles(beego.BConfig.WebConfig.ViewsPath + "/404.html")
+	data := make(map[string]interface{})
+	data["content"] = "page not found"
+	t.Execute(rw, data)
 }
