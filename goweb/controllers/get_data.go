@@ -15,8 +15,8 @@ func (this *DataController) Post() {
 	jsonInfo := this.GetString("jsonInfo")
 	if jsonInfo == "" {
 		this.Ctx.WriteString("jsoninfo is empty")
-		this.StopRun() //提前终止进程
-		return
+		//this.StopRun() //提前终止进程
+		//return
 	}
 	//GetString(key string) string
 	//GetStrings(key string) []string
@@ -29,6 +29,8 @@ func (this *DataController) Post() {
 	if err := this.ParseForm(&u); err != nil {
 		//handler error
 		fmt.Println("获取对象出错,msg:", err)
+	} else {
+		fmt.Println(u)
 	}
 
 	/*******************获取RequestBody内容***************************/

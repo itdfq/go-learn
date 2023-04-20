@@ -66,4 +66,7 @@ func init() {
 	//实验失败了，没有成功，具体原因待查看
 	beego.Include(&controllers.CMSController{})
 
+	/*******************获取数据*********************************/
+	beego.Router("/getData", &controllers.DataController{})
+
 }
