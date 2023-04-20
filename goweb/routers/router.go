@@ -69,4 +69,29 @@ func init() {
 	/*******************获取数据*********************************/
 	beego.Router("/getData", &controllers.DataController{})
 
+	/****************过滤器**********************/
+	var FilterUser = func(ctx *context.Context) {
+		_, ok := ctx.Input.Session("uid").(int)
+		if !ok && ctx.Request.RequestURI != "/login" {
+			ctx.Redirect(302, "/login")
+
+		}
+	}
+
+	//beego.InsertFilter("/api/*", beego.BeforeRouter, FilterUser)
+	beego.InsertFilter("/api/:id[0-9]+", beego.BeforeRouter, FilterUser)
+
+	/**
+	InsertFilter 函数的三个必填参数，一个可选参数
+
+	pattern 路由规则，可以根据一定的规则进行路由，如果你全匹配可以用 *
+	position 执行 Filter 的地方，五个固定参数如下，分别表示不同的执行过程
+	BeforeStatic 静态地址之前
+	BeforeRouter 寻找路由之前
+	BeforeExec 找到路由之后，开始执行相应的 Controller 之前
+	AfterExec 执行完 Controller 逻辑之后执行的过滤器
+	FinishRouter 执行完逻辑之后执行的过滤器
+	filter filter 函数 type FilterFunc func(*context.Context)
+	*/
+
 }
