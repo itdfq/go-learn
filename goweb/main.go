@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 	"goweb/controllers"
+	"goweb/models"
 	_ "goweb/routers"
 	"html/template"
 	"log"
@@ -46,6 +48,56 @@ func init() {
 
 	//定义错误处理的controller
 	beego.ErrorController(&controllers.FuncController{})
+
+	//开启sql查询debug
+	orm.Debug = true
+
+}
+
+func crud() {
+	o := orm.NewOrm()
+	//insert
+	user := models.User{Username: "123"}
+	o.Insert(user)
+
+	//update
+	user.Username = "update-name"
+	num, err := o.Update(&user)
+	fmt.Println("修改受影响的行数:%d,报错:%v\n", num, err)
+
+	//read one
+	u := models.User{Id: user.Id}
+	err = o.Read(&u)
+	fmt.Println("readone：", u)
+
+	//delete
+	num, err = o.Delete(&u)
+
+	//关联查询
+	var posts []*models.Post
+	qs := o.QueryTable("post")
+	num, err = qs.Filter("User_Name", "slence").All(&posts)
+	fmt.Println("关联查询的num:", num)
+
+	//sql 查询
+	var maps []orm.Params
+	num, err = o.Raw("select * from user").Values(&maps)
+	for _, term := range maps {
+		fmt.Println(term["id"], ":", term["name"])
+	}
+
+	//事务处理
+	o.Begin()
+	//处理具体的业务逻辑
+	user = models.User{Username: "username"}
+	id, err := o.Insert(&user)
+	if err != nil {
+		o.Commit()
+		fmt.Println("插入的id为：", id)
+
+	} else {
+		o.Rollback()
+	}
 
 }
 func page_not_found(rw http.ResponseWriter, r *http.Request) {

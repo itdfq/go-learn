@@ -63,6 +63,8 @@ func (this *FuncController) Render() error { //这个函数主要用来实现渲
 	return nil
 }
 
+//注意不能实现，父类不出现的方法，这样会导致，调用父类对象的接口或者方法无法成功调用
+
 func (this *FuncController) Error404() {
 	this.Data["content"] = "page not found"
 	this.TplPrefix = "404.tpl"
