@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego/session"
 	_ "github.com/go-sql-driver/mysql"
 	"goweb/controllers"
 	"goweb/models"
@@ -105,4 +106,43 @@ func page_not_found(rw http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["content"] = "page not found"
 	t.Execute(rw, data)
+}
+
+//初始化session
+func init_session() {
+	sessionConfig := &session.ManagerConfig{
+		CookieName:      "gosessionID", //传入客户端存储Cookie的名字
+		EnableSetCookie: true,
+		Gclifetime:      3600, //
+		Maxlifetime:     3600,
+		Secure:          false, //是否开启HTTPS
+		CookieLifeTime:  3600,
+		ProviderConfig:  "./tmp", //配置设置，设置引擎设置
+	}
+	globalSessions, _ := session.NewManager("memory", sessionConfig)
+	go globalSessions.GC()
+}
+
+//模拟登录
+func login(w http.ResponseWriter, r *http.Request) {
+	/**
+	函数介绍
+	SessionStart 根据当前请求返回 session 对象
+	SessionDestroy 销毁当前 session 对象
+	SessionRegenerateId 重新生成 sessionID
+	GetActiveSession 获取当前活跃的 session 用户
+	SetHashFunc 设置 sessionID 生成的函数
+	SetSecure 设置是否开启 cookie 的 Secure 设置
+	*/
+	sess, _ := beego.GlobalSessions.SessionStart(w, r)
+	defer sess.SessionRelease(w) //release the resource & save data to provider & return the data
+	userName := sess.Get("username")
+	fmt.Println("当前登录的用户名称为", userName)
+	if r.Method == "GET" {
+		t, _ := template.ParseFiles("login.gtpl")
+		t.Execute(w, nil)
+	} else {
+		sess.Set("username", userName)
+	}
+
 }
