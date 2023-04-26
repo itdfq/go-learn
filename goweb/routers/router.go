@@ -94,4 +94,7 @@ func init() {
 	filter filter 函数 type FilterFunc func(*context.Context)
 	*/
 
+	//缓存
+	beego.Router("/getCache", &controllers.CacheController{})
+	beego.Router("/putCache", &controllers.CacheController{}, "post:PutCache")
 }
