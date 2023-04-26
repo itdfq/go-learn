@@ -79,6 +79,14 @@ func (c *UserController) Get() {
 	c.Data["user"] = user
 	c.Data["Website"] = "itdfq.com"
 	c.Data["Email"] = "666.com"
+	//设置模板值
+	pages := []struct {
+		Num int
+	}{{10}, {20}, {30}}
+
+	c.Data["Total"] = 100
+	c.Data["Pages"] = pages
+	c.Data["PagesPerPage"] = 23
 	//使用新的实体模板
 	//如果不指定，默认则会去 Controller/<方法名>.tpl 查找
 	c.TplName = "user.tpl"
