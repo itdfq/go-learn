@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-	"goweb/cacheUtils"
+	"goweb/utils"
 	"time"
 )
 
@@ -15,7 +15,7 @@ func (c *CacheController) Get() {
 	key := c.GetString("key")
 	logs.Info("当前查询的参数为：", key)
 	if key != "" {
-		value := cacheUtils.GetStr(key)
+		value := utils.GetStr(key)
 		logs.Info(key, "=", value)
 		mystruct := &Result{200, "", value, 0}
 		c.Data["json"] = mystruct
@@ -39,7 +39,7 @@ func (c *CacheController) PutCache() {
 		return
 	}
 	timeSecond := time.Duration(second) * time.Second
-	err := cacheUtils.SetStr(key, value, timeSecond)
+	err := utils.SetStr(key, value, timeSecond)
 	var result string
 	if err != nil {
 		result = ("保存失败")
