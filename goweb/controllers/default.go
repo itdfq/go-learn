@@ -163,7 +163,6 @@ func (this *ZhengzeController) Get() {
 	mystruct := &Result{200, "", "请求的id" + id, 0}
 	this.Data["json"] = mystruct
 	this.ServeJSON()
-
 }
 
 func (this *ZhengzeController) ListFood() {

@@ -57,9 +57,15 @@ func init() {
 
 	//日志框架
 	log := logs.NewLogger()
+	//日志引擎设置
 	logs.SetLogger(logs.AdapterFile, `{"filename":"project.log","level":7,"maxlines":0,"maxsize":0,"daily":true,"maxdays":10,"color":true}`)
 	log.EnableFuncCallDepth(true) //输出文件名和文件号
 	log.Debug("服务启动成功")
+	log.SetLogFuncCallDepth(2)
+
+	logs.Async()    //设置输出日志，
+	logs.Async(1e3) //设置异步输出的缓冲池chan的大小
+
 }
 
 func crud() {
