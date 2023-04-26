@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"goweb/cacheUtils"
-	"log"
 	"time"
 )
 
@@ -13,10 +13,10 @@ type CacheController struct {
 
 func (c *CacheController) Get() {
 	key := c.GetString("key")
-	log.Println("当前查询的参数为：", key)
+	logs.Info("当前查询的参数为：", key)
 	if key != "" {
 		value := cacheUtils.GetStr(key)
-		log.Println(key, "=", value)
+		logs.Info(key, "=", value)
 		mystruct := &Result{200, "", value, 0}
 		c.Data["json"] = mystruct
 		c.ServeJSON()
@@ -28,7 +28,7 @@ func (c *CacheController) PutCache() {
 	key := c.GetString("key")
 	value := c.GetString("value")
 	second, _ := c.GetInt("second")
-	log.Println("当前的key:", key, "value:", value, "过期时间：", second, "秒")
+	logs.Info("当前的key:", key, "value:", value, "过期时间：", second, "秒")
 	if second == 0 {
 		second = 10
 	}

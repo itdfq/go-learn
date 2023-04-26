@@ -3,8 +3,9 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"goweb/models"
-	"log"
+
 	"path"
 	"strings"
 )
@@ -133,7 +134,7 @@ func (this *FileOptUploadController) Post() {
 	//文件名称
 	oldName := h.Filename
 	fileName := h.Filename
-	log.Print("当前上传文件为：", fileName)
+	logs.Info("当前上传文件为：", fileName)
 	arr := strings.Split(fileName, ".")
 	if len(arr) > 1 {
 		index := len(arr) - 1
@@ -143,7 +144,8 @@ func (this *FileOptUploadController) Post() {
 	f.Close()
 	//保存上传文件到指定位置
 	this.SaveToFile("image", path.Join("static/uploadFile", oldName))
-	log.Println("上传成功")
+	//log.INfo("上传成功")
+	logs.Info("上传成功")
 	//显示在本页面，不做跳转操作
 	this.TplName = "fileopt.html"
 }
@@ -158,7 +160,6 @@ func (this *FileOptDownloadController) Get() {
 }
 func (this *ZhengzeController) Get() {
 	id := this.Ctx.Input.Param(":id")
-	println("请求的id:", id)
 	mystruct := &Result{200, "", "请求的id" + id, 0}
 	this.Data["json"] = mystruct
 	this.ServeJSON()

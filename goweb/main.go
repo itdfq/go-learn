@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/session"
 	_ "github.com/go-sql-driver/mysql"
@@ -10,9 +11,10 @@ import (
 	"goweb/models"
 	_ "goweb/routers"
 	"html/template"
-	"log"
 	"net/http"
 )
+
+var log logs.BeeLogger
 
 func main() {
 
@@ -40,9 +42,9 @@ func init() {
 	dataSource := mysqlUser + COLON + mysqlPasswd + "@tcp(" + mysqlUrls + COLON + mysqlProt + ")/" + dbName + "?charset=utf8"
 	orm.RegisterDataBase("default", "mysql", dataSource)
 
-	log.Println("数据库初始化成功,当前连接的数据库为：", dbName)
+	log.Info("数据库初始化成功,当前连接的数据库为：", dbName)
 	runmode := beego.AppConfig.String("runmode")
-	log.Println("系统启动成功,当前环境为：{" + runmode + "}")
+	log.Info("系统启动成功,当前环境为：{" + runmode + "}")
 
 	//自定义错误处理
 	beego.ErrorHandler("404", page_not_found)
@@ -53,6 +55,11 @@ func init() {
 	//开启sql查询debug
 	orm.Debug = true
 
+	//日志框架
+	log := logs.NewLogger()
+	logs.SetLogger(logs.AdapterFile, `{"filename":"project.log","level":7,"maxlines":0,"maxsize":0,"daily":true,"maxdays":10,"color":true}`)
+	log.EnableFuncCallDepth(true) //输出文件名和文件号
+	log.Debug("服务启动成功")
 }
 
 func crud() {
