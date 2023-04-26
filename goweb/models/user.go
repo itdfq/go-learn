@@ -47,5 +47,6 @@ func GetUserById(id int) *User {
 		println("找不到主键")
 		return nil
 	}
+
 	return &user
 }
