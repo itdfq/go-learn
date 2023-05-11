@@ -14,6 +14,10 @@ type Params struct {
 type Rect struct {
 }
 
+type Params1 struct {
+	X, Y int
+}
+
 //RPC 服务端方法，求矩形面积
 func (r *Rect) Area(p Params, ret *int) error {
 	*ret = p.Height * p.Width
@@ -23,6 +27,11 @@ func (r *Rect) Area(p Params, ret *int) error {
 //周长
 func (r *Rect) Perimeter(p Params, ret *int) error {
 	*ret = (p.Width + p.Height) * 2
+	return nil
+}
+
+func (r *Rect) Addition(p Params1, result *int) error {
+	*result = p.Y * p.Y
 	return nil
 }
 

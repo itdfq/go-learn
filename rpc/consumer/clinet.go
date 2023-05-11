@@ -9,6 +9,9 @@ import (
 type Params struct {
 	Width, Height int
 }
+type Params1 struct {
+	X, Y int
+}
 
 /**
 RPC 注意事项：
@@ -42,4 +45,11 @@ func main() {
 		log.Fatal(err3)
 	}
 	fmt.Println("周长：", ret)
+
+	//计算两个数想乘
+	err4 := conn.Call("Rect.Addition", Params1{50, 100}, &ret)
+	if err4 != nil {
+		log.Fatal(err4)
+	}
+	fmt.Println("乘法结果：", ret)
 }
