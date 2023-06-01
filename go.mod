@@ -3,6 +3,7 @@ module go-learn
 go 1.16
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/Shopify/sarama v1.38.1
 	github.com/bytedance/sonic v1.8.2 // indirect
 	github.com/gin-gonic/gin v1.9.0
@@ -10,6 +11,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
+	github.com/jackdanger/collectlinks v0.0.0-20160421202702-24c4ee2870ba
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/labstack/echo v3.3.10+incompatible
