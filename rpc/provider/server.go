@@ -20,17 +20,20 @@ type Params1 struct {
 
 //RPC 服务端方法，求矩形面积
 func (r *Rect) Area(p Params, ret *int) error {
+	log.Println("收到求矩形面积的方法,当前获取的参数为:", p)
 	*ret = p.Height * p.Width
 	return nil
 }
 
 //周长
 func (r *Rect) Perimeter(p Params, ret *int) error {
+	log.Println("收到求矩形周长的方法,当前获取的参数为:", p)
 	*ret = (p.Width + p.Height) * 2
 	return nil
 }
 
 func (r *Rect) Addition(p Params1, result *int) error {
+	log.Println("收到求矩形面积的方法,当前获取的参数为:", p)
 	*result = p.Y * p.Y
 	return nil
 }
@@ -48,4 +51,5 @@ func main() {
 	if err != nil {
 		log.Panicln(err)
 	}
+	log.Println("服务启动成功")
 }
