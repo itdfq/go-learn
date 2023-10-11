@@ -8,9 +8,9 @@ func main() {
 	siteMap["Google"] = "谷歌"
 	siteMap["baidu"] = "百度"
 	for site := range siteMap {
-		println(site)
-
+		println(site, "-->", siteMap[site])
 	}
+	fmt.Printf("当前元素的map为：%v", siteMap)
 	//获取期中一个元素
 	name, ok := siteMap["baidu"]
 	if ok {

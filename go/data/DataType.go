@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 //go的数据类型
 func main() {
@@ -22,13 +25,21 @@ func main() {
 	//变量赋值
 	var x1 *int
 	var x2 []int
-	var x3 map[string]int
+	var x3 map[string]int = make(map[string]int)
 	var x4 chan int
 	var x5 func(string) int
 	var x6 error
+	fmt.Print("\n---------------------\n")
+	for i := 1; i < 6; i++ {
+		//int 转化成string 使用这种方式
+		a := strconv.Itoa(i)
+		fmt.Println("当前加入的元素的值为:", a)
+		x3[a] = i
+	}
+
 	fmt.Println(x1)
 	fmt.Println(x2)
-	fmt.Println(x3)
+	fmt.Printf("%v/n", x3)
 	fmt.Println(x4)
 	fmt.Println(x5)
 	fmt.Println(x6)
